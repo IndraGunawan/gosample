@@ -1,5 +1,5 @@
-include ./.env
-export $(shell sed 's/=.*//' ./.env)
+include ./env
+export $(shell sed 's/=.*//' ./env)
 
 run-appserver:
 	go run ./app/web/main.go

@@ -6,7 +6,6 @@ import (
 
 	"github.com/IndraGunawan/gosample"
 	"github.com/IndraGunawan/gosample/database"
-	"github.com/IndraGunawan/gosample/env"
 	"github.com/IndraGunawan/gosample/handler"
 	"github.com/julienschmidt/httprouter"
 )
@@ -15,12 +14,12 @@ func main() {
 	router := httprouter.New()
 
 	databaseOpt := database.Option{
-		Host:     env.GetWithDefault("MYSQL_HOST", "127.0.0.1"),
-		Port:     env.GetWithDefault("MYSQL_PORT", "3306"),
-		User:     env.Get("MYSQL_USER"),
-		Password: env.Get("MYSQL_PASSWORD"),
-		Database: env.Get("MYSQL_DATABASE"),
-		Charset:  env.GetWithDefault("MYSQL_CHARSET", "utf8"),
+		Host:     gosample.GetEnvWithDefault("MYSQL_HOST", "127.0.0.1"),
+		Port:     gosample.GetEnvWithDefault("MYSQL_PORT", "3306"),
+		User:     gosample.GetEnv("MYSQL_USER"),
+		Password: gosample.GetEnv("MYSQL_PASSWORD"),
+		Database: gosample.GetEnv("MYSQL_DATABASE"),
+		Charset:  gosample.GetEnvWithDefault("MYSQL_CHARSET", "utf8"),
 	}
 
 	mysql, _ := database.New(databaseOpt)
