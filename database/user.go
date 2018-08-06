@@ -27,7 +27,7 @@ func (u *UserRepository) Create(ctx context.Context, user gosample.User) error {
 	default:
 	}
 
-	_, err := u.mysql.db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", user.Name, user.Email, user.Password)
+	_, err := u.mysql.Db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", user.Name, user.Email, user.Password)
 	return err
 }
 
@@ -44,7 +44,7 @@ func (u *UserRepository) FindAll(ctx context.Context) ([]gosample.User, error) {
 	builder := goq.Select("id", "name", "email", "password").
 		From("users")
 
-	rows, err := u.mysql.db.Query(builder.ToSQL())
+	rows, err := u.mysql.Db.Query(builder.ToSQL())
 	if err != nil {
 		return users, nil
 	}
@@ -78,7 +78,7 @@ func (u *UserRepository) FindByID(ctx context.Context, id int) (gosample.User, e
 		From("users").
 		Where("id = ?", id)
 
-	err := u.mysql.db.QueryRow(builder.ToSQL(), builder.GetBindingParameters()...).Scan(&user.ID, &user.Name, &user.Email, &user.Password)
+	err := u.mysql.Db.QueryRow(builder.ToSQL(), builder.GetBindingParameters()...).Scan(&user.ID, &user.Name, &user.Email, &user.Password)
 
 	return user, err
 }

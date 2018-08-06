@@ -9,7 +9,7 @@ import (
 
 // MySQL holds the functionality to database related
 type MySQL struct {
-	db *sql.DB
+	Db *sql.DB
 }
 
 // Option holds the requirement to create database connection
@@ -31,5 +31,5 @@ func New(opt Option) (*MySQL, error) {
 		return &MySQL{}, err
 	}
 
-	return &MySQL{db: db}, nil
+	return &MySQL{Db: db}, nil
 }
