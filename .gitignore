@@ -17,4 +17,4 @@
 /vendor/
 /Godeps/
 
-.env
+env
