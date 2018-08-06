@@ -26,7 +26,9 @@ func TestCreate(t *testing.T) {
 		Email:    "email1",
 	}
 
-	assert.Nil(t, userService.Create(context.Background(), user))
+	lastInsertID, err := userService.Create(context.Background(), user)
+	assert.Equal(t, int64(0), lastInsertID)
+	assert.Nil(t, err)
 }
 
 func TestFindByID(t *testing.T) {

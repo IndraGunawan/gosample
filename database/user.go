@@ -20,15 +20,25 @@ func NewUserRepository(database *MySQL) *UserRepository {
 }
 
 // Create is method to insert new user to database
-func (u *UserRepository) Create(ctx context.Context, user gosample.User) error {
+func (u *UserRepository) Create(ctx context.Context, user gosample.User) (int64, error) {
 	select {
 	case <-ctx.Done():
-		return errors.New("Timeout")
+		return 0, errors.New("Timeout")
 	default:
 	}
 
-	_, err := u.mysql.Db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", user.Name, user.Email, user.Password)
-	return err
+	result, err := u.mysql.Db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", user.Name, user.Email, user.Password)
+	if err != nil {
+		return 0, err
+	}
+
+	var lastInsertID int64
+	lastInsertID, err = result.LastInsertId()
+	if err != nil {
+		return 0, err
+	}
+
+	return lastInsertID, nil
 }
 
 // FindAll fetchs all user record from database
@@ -65,7 +75,7 @@ func (u *UserRepository) FindAll(ctx context.Context) ([]gosample.User, error) {
 }
 
 // FindByID fetchs single user record from database by id
-func (u *UserRepository) FindByID(ctx context.Context, id int) (gosample.User, error) {
+func (u *UserRepository) FindByID(ctx context.Context, id int64) (gosample.User, error) {
 	var user gosample.User
 
 	select {

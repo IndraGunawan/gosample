@@ -10,8 +10,8 @@ import (
 type UserRepository struct{}
 
 // Create is method to insert new user to database
-func (u *UserRepository) Create(ctx context.Context, user gosample.User) error {
-	return nil
+func (u *UserRepository) Create(ctx context.Context, user gosample.User) (int64, error) {
+	return 0, nil
 }
 
 // FindAll fetchs all user record from database
@@ -35,7 +35,7 @@ func (u *UserRepository) FindAll(ctx context.Context) ([]gosample.User, error) {
 }
 
 // FindByID fetchs single user record from database by id
-func (u *UserRepository) FindByID(ctx context.Context, id int) (gosample.User, error) {
+func (u *UserRepository) FindByID(ctx context.Context, id int64) (gosample.User, error) {
 	user := gosample.User{
 		ID:       1,
 		Name:     "test1",

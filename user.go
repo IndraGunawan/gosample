@@ -6,7 +6,7 @@ import (
 
 // User maps data for user model
 type User struct {
-	ID       int    `json:"id"`
+	ID       int64  `json:"id"`
 	Name     string `json:"name"`
 	Password string `json:"password"`
 	Email    string `json:"email"`
@@ -14,9 +14,9 @@ type User struct {
 
 // UserRepository is a contract about user action
 type UserRepository interface {
-	Create(context.Context, User) error
+	Create(context.Context, User) (int64, error)
 	FindAll(context.Context) ([]User, error)
-	FindByID(context.Context, int) (User, error)
+	FindByID(context.Context, int64) (User, error)
 }
 
 // UserService holds any user service related
@@ -30,7 +30,7 @@ func NewUserService(userRepository UserRepository) *UserService {
 }
 
 // Create is a method to create new user
-func (us *UserService) Create(ctx context.Context, user User) error {
+func (us *UserService) Create(ctx context.Context, user User) (int64, error) {
 	return us.userRepository.Create(ctx, user)
 }
 
@@ -40,6 +40,6 @@ func (us *UserService) FindAll(ctx context.Context) ([]User, error) {
 }
 
 // FindByID is a method to fetch single user record by ID
-func (us *UserService) FindByID(ctx context.Context, id int) (User, error) {
+func (us *UserService) FindByID(ctx context.Context, id int64) (User, error) {
 	return us.userRepository.FindByID(ctx, id)
 }
