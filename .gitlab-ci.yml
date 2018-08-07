@@ -20,6 +20,7 @@ test:
   image: registry.bukalapak.io/sre/gudang/golang:1.0.1
   before_script: *prep-go-dir
   script:
+  - cp env.sample env
   - make test
   cache:
     key: depcache
