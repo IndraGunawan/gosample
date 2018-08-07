@@ -9,6 +9,7 @@ SERVICES ?= web
 ENV      ?= default
 FILE     ?= deployment
 
+export VERSION
 export VAR_KUBE_NAMESPACE ?= default
 export VAR_CONSUL_PREFIX ?= gosample
 
