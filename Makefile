@@ -7,6 +7,7 @@ NOCACHE   = --no-cache
 VERSION   = $(shell git show -q --format=%h)
 SERVICES ?= web
 ENV      ?= default
+FILE     ?= deployment
 
 dep:
 	dep ensure
@@ -43,3 +44,15 @@ endif
 
 $(ENV):
 	@$(foreach var, $(SERVICES), kubectl replace -f $(ODIR)/$(var)/$@/deployment.yml;)
+
+
+checkenv:
+ifndef ENV
+	$(error ENV must be set.)
+endif
+
+deploy: checkenv $(ODIR)
+	@$(foreach svc, $(SERVICES), \
+		echo deploying "$(svc)" to environment "$(ENV)" && \
+		! kubelize genfile --overwrite -c ./ -s $(svc) -e $(ENV) deploy/$(svc)/$(FILE).yml $(ODIR)/$(svc)/ || \
+		kubectl replace -f $(ODIR)/$(svc)/$(FILE).yml || kubectl create -f $(ODIR)/$(svc)/$(FILE).yml ;)
