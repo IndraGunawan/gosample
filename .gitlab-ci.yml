@@ -13,6 +13,7 @@ variables:
 - mkdir -p $GOPATH/src/github.com/bukalapak
 - ln -s $CI_PROJECT_DIR $GOPATH/src/github.com/bukalapak
 - cd $GOPATH/src/github.com/bukalapak/$CI_PROJECT_NAME
+- cp env.sample env
 - make dep
 
 test:
@@ -20,7 +21,6 @@ test:
   image: registry.bukalapak.io/sre/gudang/golang:1.0.1
   before_script: *prep-go-dir
   script:
-  - cp env.sample env
   - make test
   cache:
     key: depcache
