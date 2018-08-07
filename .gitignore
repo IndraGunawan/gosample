@@ -18,3 +18,8 @@
 /Godeps/
 
 env
+
+web
+!web/
+
+deploy/_output
