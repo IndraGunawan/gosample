@@ -15,7 +15,6 @@ all:
 	consul compile build push deployment
 
 test:
-	cat handler/user.go
 	go test ./...
 
 compile:
