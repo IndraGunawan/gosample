@@ -58,4 +58,5 @@ deploy: checkenv $(ODIR)
 	@$(foreach svc, $(SERVICES), \
 		echo deploying "$(svc)" to environment "$(ENV)" && \
 		! kubelize genfile --overwrite -c ./ -s $(svc) -e $(ENV) deploy/$(svc)/$(FILE).yml $(ODIR)/$(svc)/ || \
+		cat $(ODIR)/$(svc)/$(FILE) || \
 		kubectl replace -f $(ODIR)/$(svc)/$(FILE).yml || kubectl create -f $(ODIR)/$(svc)/$(FILE).yml ;)
