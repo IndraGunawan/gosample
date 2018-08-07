@@ -1,7 +1,7 @@
 templateVersion: v2.2.0
 projectName: gosample
 services:
-- name: gosample
+- name: web
   port: "8080"
   environments:
   - name: production
