@@ -4,7 +4,7 @@ REGISTRY  = registry.bukalapak.io/bukalapak
 DDIR      = deploy
 ODIR      = $(DDIR)/_output
 NOCACHE   = --no-cache
-VERSION   = $(shell git show -q --format=%h)
+VERSION  ?= $(shell git show -q --format=%h)
 SERVICES ?= web
 ENV      ?= default
 FILE     ?= deployment
